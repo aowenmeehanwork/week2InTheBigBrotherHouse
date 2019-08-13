@@ -71,7 +71,10 @@ public class UserInterface {
 			});
 
 			System.out.println("Employees in " + input + ":");
-			employees.forEach(System.out::println);
+			employees.forEach(e -> {
+				System.out.println("===========================");
+				System.out.println(e.toString());
+			});
 
 		}
 	}

@@ -36,8 +36,8 @@ public interface EmployeeDAO {
 	@SqlQuery("SELECT * FROM department")
 	@RegisterBeanMapper(Department.class)
 	List<Department> getAllDepartments();
-
-	@SqlQuery("SELECT employee_id, first_name, middle_name, last_name, department.name "
+	
+	@SqlQuery("SELECT first_name, middle_name, last_name, address_line, post_code, email, nin, bank_sort_code, bank_account_no, salary, employee.department_id, department.name "
 			+ "FROM week2_company.employee inner join department on employee.department_id=department.department_id "
 			+ "where department.name = ?")
 	@RegisterBeanMapper(Employee.class)

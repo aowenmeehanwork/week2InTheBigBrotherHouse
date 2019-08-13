@@ -106,13 +106,23 @@ public class Employee {
 		this.salary = salary;
 	}
 
-	@Override
-	public String toString() {
-    return first_name + (middle_name == null || middle_name.isEmpty() ? "" : " " + middle_name)
-        + " " + last_name;
-  }
+	
+	
+//	@Override
+//	public String toString() {
+//    return first_name + (middle_name == null || middle_name.isEmpty() ? "" : " " + middle_name)
+//        + " " + last_name;
+//  }
 
-  public int getDepartment_id() {
+  @Override
+	public String toString() {
+		return "Employee [\n\tname=" + first_name + (middle_name == null || middle_name.isEmpty() ? "" : " " + middle_name)
+		        + " " + last_name+ ",\n\t address_line=" + address_line + ",\n\t post_code=" + post_code
+				+ ",\n\t email=" + email + ",\n\t nin=" + nin + ",\n\t bank_sort_code=" + bank_sort_code + ",\n\t bank_account_no="
+				+ bank_account_no + "\n\t, salary=" + salary + "\n]";
+	}
+
+public int getDepartment_id() {
     return department_id;
   }
 

@@ -10,6 +10,7 @@ public class SalesEmployee extends Employee {
 	}
 	
 	public void setEmployee_id(int employee_id) {
+		super.setEmployee_id(employee_id);
 		this.employee_id = employee_id;
 	}
 	
