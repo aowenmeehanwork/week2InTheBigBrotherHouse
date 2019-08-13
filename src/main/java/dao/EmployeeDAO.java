@@ -26,9 +26,8 @@ public interface EmployeeDAO {
 	// errors
 
 	@SqlUpdate("INSERT into sales_employee(employee_id, commission_rate, total_sales) "
-			+ "VALUES (s:employee_id, s:commission_rate, s:total_sales)")
-	@GetGeneratedKeys
-	int insertSalesEmployee(@BindBean("s") SalesEmployee salesEmployee);
+			+ "VALUES (:s.employee_id, :s.commission_rate, :s.total_sales)")
+	void insertSalesEmployee(@BindBean("s") SalesEmployee salesEmployee);
 
 	@SqlUpdate("INSERT into department(name) VALUES (?)")
 	@GetGeneratedKeys
