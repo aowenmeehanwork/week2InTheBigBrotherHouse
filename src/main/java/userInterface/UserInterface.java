@@ -114,16 +114,16 @@ public class UserInterface {
 	  employeeStartingSalary = scanner.nextInt();
 	  
 	  Employee newEmployee = new Employee();
-	  
-	  newEmployee.setFirstName(employeeName);
-	  newEmployee.setLastName(employeeSurname);
-	  newEmployee.setMiddleName(employeeOtherNames);
-	  newEmployee.setAddressLine(employeeAddress);
-	  newEmployee.setPostCode(employeePostcode);
+
+    newEmployee.setFirst_name(employeeName);
+    newEmployee.setLast_name(employeeSurname);
+    newEmployee.setMiddle_name(employeeOtherNames);
+    newEmployee.setAddress_line(employeeAddress);
+    newEmployee.setPost_code(employeePostcode);
 	  newEmployee.setEmail(employeeEmail);
 	  newEmployee.setNin(employeeNINumber);
-	  newEmployee.setBankAccountNo(employeeBankAccountNo);
-	  newEmployee.setBankSortCode(employeeBankSortCode);
+    newEmployee.setBank_account_no(employeeBankAccountNo);
+    newEmployee.setBank_sort_code(employeeBankSortCode);
 	  newEmployee.setSalary(employeeStartingSalary);
 	  
 	  connection.withHandle(handle -> {
