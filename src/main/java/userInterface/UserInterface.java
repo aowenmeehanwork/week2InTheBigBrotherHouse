@@ -61,7 +61,77 @@ public class UserInterface {
   }
 
   private static void insertGenericEmployee() {
+    
+	  String employeeName;
+	  String employeeSurname;
+	  String employeeOtherNames;
+	  String employeeAddress;
+	  String employeePostcode;
+	  String employeeEmail;
+	  String employeeNINumber;
+	  String employeeBankAccountNo;
+	  String employeeBankSortCode;
+	  float employeeStartingSalary;
+	  
+	  System.out.println("Please enter employee first name: ");
+	  do {
+	    employeeName = scanner.nextLine();
+	    if (!(employeeName.length() > 0 && employeeName.length() < 50)) {
+	      System.out.println("Ensure that name is not null and less than 50 characters long");
+	    }
+	  } while (!(employeeName.length() > 0 && employeeName.length() < 50));
+	  
+	  System.out.println("Please enter employee surname: ");
+	  employeeSurname = scanner.nextLine();
+	  
+	  System.out.println("Please enter employee other names: ");
+	  employeeOtherNames = scanner.nextLine();
+	  
+	  System.out.println("Please enter employee address: ");
+	  do {
+	    employeeAddress = scanner.nextLine();
+		if (!employeeAddress.isEmpty()) {
+			System.out.println("Please ensure that the address is not empty");
+		}
+	  } while ((employeeAddress.isEmpty()));
 
+	  System.out.println("Enter postcode");
+	  employeePostcode = scanner.nextLine();
+	  
+	  System.out.println("Please enter employee email: ");
+	  employeeEmail = scanner.nextLine();
+	  
+	  System.out.println("Please enter employee NI Number: ");
+	  employeeNINumber = scanner.nextLine();
+	  
+	  System.out.println("Please enter employee bank account number: ");
+	  employeeBankAccountNo = scanner.nextLine();
+	  
+	  System.out.println("Please enter employee bank account sort code (without '-' in number: ");
+	  employeeBankSortCode = scanner.nextLine();
+	  
+	  System.out.println("Please enter employee starting salary: ");
+	  employeeStartingSalary = scanner.nextInt();
+	  
+	  Employee newEmployee = new Employee();
+	  
+	  newEmployee.setFirstName(employeeName);
+	  newEmployee.setLastName(employeeSurname);
+	  newEmployee.setMiddleName(employeeOtherNames);
+	  newEmployee.setAddressLine(employeeAddress);
+	  newEmployee.setPostCode(employeePostcode);
+	  newEmployee.setEmail(employeeEmail);
+	  newEmployee.setNin(employeeNINumber);
+	  newEmployee.setBankAccountNo(employeeBankAccountNo);
+	  newEmployee.setBankSortCode(employeeBankSortCode);
+	  newEmployee.setSalary(employeeStartingSalary);
+	  
+	  connection.withHandle(handle -> {
+		  EmployeeDAO wrapper = handle.attach(EmployeeDAO.class);
+		  return wrapper.insertEmployee(newEmployee);
+	  });
+	  
+	  
   }
 
   private enum Statement {
