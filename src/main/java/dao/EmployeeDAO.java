@@ -37,4 +37,7 @@ public interface EmployeeDAO {
 	@RegisterBeanMapper(Employee.class)
 	List<Employee> getAllEmployeesFromDepartment(String department);
 	
+	@SqlQuery("SELECT department_id FROM department WHERE name = ?")
+	@RegisterBeanMapper(Department.class)
+	int getIdForDepartment(String department);
 }
