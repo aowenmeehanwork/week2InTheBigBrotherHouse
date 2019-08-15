@@ -8,7 +8,6 @@ import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
-import model.City;
 import model.Employee;
 
 public interface EmployeeDAO {
