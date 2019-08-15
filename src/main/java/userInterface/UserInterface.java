@@ -20,7 +20,14 @@ public class UserInterface {
         System.out.println("\t" + value.name());
       }
 
-      String in = scanner.nextLine();
+      String in;
+      while (true) {
+        in = scanner.nextLine();
+        if (!in.isEmpty()) {
+          break;
+        }
+      }
+
       try {
         input = Statement.valueOf(in.toUpperCase());
         switch (input) {
@@ -37,6 +44,7 @@ public class UserInterface {
         System.out.println("Invalid input: " + in);
       }
     } while (input != Statement.EXIT);
+
   }
 
   private static void select() {
