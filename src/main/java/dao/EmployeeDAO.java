@@ -23,6 +23,10 @@ public interface EmployeeDAO {
 	int insertEmployee(@BindBean("e") Employee employee);
 	// the above used to return long and it worked, so change to that if there are errors
 	
+	@SqlUpdate("INSERT into department(name) VALUES (?)")
+	@GetGeneratedKeys
+	int insertDepartment(String department_name);
+	
 	@SqlQuery("SELECT * FROM department")
 	@RegisterBeanMapper(Department.class)
 	List<Department> getAllDepartments();
