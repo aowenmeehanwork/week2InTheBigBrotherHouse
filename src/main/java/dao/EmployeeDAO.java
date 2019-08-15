@@ -17,8 +17,8 @@ public interface EmployeeDAO {
 	List<Employee> getAllEmployees();
 	
 	@SqlUpdate("INSERT into "
-			+ "employee(first_name, middle_name, last_name, address_line, post_code, email, nin, bank_account_no, bank_sort_code, salary) "
-			+ "VALUES (:firstName, :middleName, :lastName, :addressLine, :post_Code, :email, :nin, :bankAccountNo, :bankSortCode, :salary")
+			+ "employee(first_name, middle_name, last_name, address_line, post_code, email, nin, bank_sort_code, bank_account_no, salary) "
+			+ "VALUES (:firstName, :middleName, :lastName, :addressLine, :post_Code, :email, :nin, :bankSortCode, :bankAccountNo, :salary")
 	@GetGeneratedKeys
 	long insertEmployee(@BindBean Employee employee);
 }
