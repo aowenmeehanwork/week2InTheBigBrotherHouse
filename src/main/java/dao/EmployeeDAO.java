@@ -3,6 +3,8 @@ package dao;
 import java.util.List;
 import model.Department;
 import model.Employee;
+import model.SalesEmployee;
+
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
 import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
@@ -21,6 +23,11 @@ public interface EmployeeDAO {
 	@GetGeneratedKeys
 	int insertEmployee(@BindBean("e") Employee employee);
 	// the above used to return long and it worked, so change to that if there are errors
+	
+	@SqlUpdate("INSERT into sales_employee(employee_id, commission_rate, total_sales) "
+      + "VALUES (e:employee_id, e:commission_rate, e:total_sales)")
+	@GetGeneratedKeys
+	int insertSalesEmployee(@BindBean("s") SalesEmployee salesEmployee);
 	
 	@SqlUpdate("INSERT into department(name) VALUES (?)")
 	@GetGeneratedKeys
