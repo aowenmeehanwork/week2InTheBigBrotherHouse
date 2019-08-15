@@ -9,24 +9,16 @@ import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 
 public class Connection {
 
-  private static Connection connection = null;
-
   private static Jdbi jdbi = null;
 
   private Connection() {
     setup();
   }
 
-  public static Connection getInstance() {
-    if (connection != null) {
-      return connection;
-    } else {
-      connection = new Connection();
-      return connection;
-    }
-  }
-
   public static Jdbi getJdbi() {
+    if (jdbi == null) {
+      new Connection();
+    }
     return jdbi;
   }
 
