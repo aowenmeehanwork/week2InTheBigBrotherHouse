@@ -24,7 +24,7 @@ public class Department {
 	public String toString() {
 		return "Department{" +
 		        "department_id=" + department_id +
-		        ", first_name='" + name +
+        ", name='" + name +
 		        '}';
 	}
 	
