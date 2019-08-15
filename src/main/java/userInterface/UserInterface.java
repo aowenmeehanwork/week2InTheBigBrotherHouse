@@ -3,7 +3,9 @@ package userInterface;
 import dao.EmployeeDAO;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 import main.Connection;
+import model.Department;
 import model.Employee;
 import org.jdbi.v3.core.Jdbi;
 
@@ -42,31 +44,65 @@ public class UserInterface {
         }
       } catch (IllegalArgumentException e) {
         System.out.println("Invalid input: " + in);
+        e.printStackTrace();
       }
     } while (input != Statement.EXIT);
 
   }
 
   private static void select() {
-    List<Employee> employees = connection.withHandle(handle -> {
+    List<String> departments = connection.withHandle(handle -> {
       EmployeeDAO wrapper = handle.attach(EmployeeDAO.class);
-      return wrapper.getAllEmployees();
+      List<Department> deps = wrapper.getAllDepartments();
+      return deps.stream().map(Department::getName).collect(Collectors.toList());
     });
 
-    employees.forEach(System.out::println);
+    System.out.println("Pick a department to view employees of: ");
+    departments.forEach(s -> System.out.println("\t" + s));
+    Scanner s = new Scanner(System.in);
+    String input = s.nextLine();
 
+    if (departments.contains(input)) {
+      List<Employee> employees = connection.withHandle(handle -> {
+        EmployeeDAO wrapper = handle.attach(EmployeeDAO.class);
+        return wrapper.getAllEmployeesFromDepartment(input);
+      });
+
+      System.out.println("Employees in " + input + ":");
+      employees.forEach(System.out::println);
+
+    }
   }
 
   private static void insert() {
     System.out.println("What would you like to insert:");
     System.out.println("\tEmployee");
+    System.out.println("\tDepartment");
     String in = scanner.nextLine();
     if (in.toUpperCase().equals("EMPLOYEE")) {
       insertGenericEmployee();
+    } else if (in.toUpperCase().equals("DEPARTMENT")) {
+      insertDepartment();
     } else {
       System.out.println("Please input a valid option");
     }
   }
+
+  private static void insertDepartment() {
+    String departmentName;
+
+    System.out.println("Please insert a department name:");
+    do {
+      departmentName = scanner.nextLine();
+    } while (departmentName.isEmpty());
+
+    String finalDepartmentName = departmentName;
+    connection.withHandle(handle -> {
+      EmployeeDAO wrapper = handle.attach(EmployeeDAO.class);
+      return wrapper.insertDepartment(finalDepartmentName);
+    });
+  }
+
 
   private static void insertGenericEmployee() {
     
@@ -80,6 +116,7 @@ public class UserInterface {
 	  String employeeBankAccountNo;
 	  String employeeBankSortCode;
 	  float employeeStartingSalary;
+    int departmentId = 0;
 	  
 	  System.out.println("Please enter employee first name: ");
 	  do {
@@ -157,7 +194,29 @@ public class UserInterface {
         System.out.println("Please input a number greater than or equal to 0");
       }
     } while (!validSalary(employeeStartingSalary));
-	  
+
+    List<Department> departments = connection.withHandle(handle -> {
+      EmployeeDAO wrapper = handle.attach(EmployeeDAO.class);
+      return wrapper.getAllDepartments();
+    });
+
+    System.out.println("Please enter a valid department:");
+    departments.stream().map(Department::getName).forEach(s -> System.out.println("\t" + s));
+
+    String in;
+    do {
+      in = scanner.nextLine();
+      if (!validDepartment(in, departments)) {
+        System.out.println("Please enter a valid department");
+      }
+    } while (!validDepartment(in, departments));
+
+    for (Department department : departments) {
+      if (department.getName().equals(in)) {
+        departmentId = department.getDepartment_id();
+      }
+    }
+
 	  Employee newEmployee = new Employee();
 
     newEmployee.setFirst_name(employeeName);
@@ -170,6 +229,7 @@ public class UserInterface {
     newEmployee.setBank_account_no(employeeBankAccountNo);
     newEmployee.setBank_sort_code(employeeBankSortCode);
 	  newEmployee.setSalary(employeeStartingSalary);
+    newEmployee.setDepartment_id(departmentId);
 	  
 	  connection.withHandle(handle -> {
 		  EmployeeDAO wrapper = handle.attach(EmployeeDAO.class);
@@ -177,6 +237,16 @@ public class UserInterface {
 	  });
 	  
 	  
+  }
+
+  private static boolean validDepartment(String in, List<Department> departments) {
+    for (Department department : departments) {
+      if (department.getName().equals(in)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   private static boolean validSalary(float employeeStartingSalary) {

@@ -108,19 +108,15 @@ public class Employee {
 
 	@Override
 	public String toString() {
-    return "Employee{" +
-        "employee_id=" + employee_id +
-        ", first_name='" + first_name + '\'' +
-        ", middle_name='" + middle_name + '\'' +
-        ", last_name='" + last_name + '\'' +
-        ", address_line='" + address_line + '\'' +
-        ", post_code='" + post_code + '\'' +
-        ", email='" + email + '\'' +
-        ", nin='" + nin + '\'' +
-        ", bank_sort_code='" + bank_sort_code + '\'' +
-        ", bank_account_no='" + bank_account_no + '\'' +
-        ", salary=" + salary + '\'' +
-        ", department_id=" + department_id +
-        '}';
-	}
+    return first_name + (middle_name == null || middle_name.isEmpty() ? "" : " " + middle_name)
+        + " " + last_name;
+  }
+
+  public int getDepartment_id() {
+    return department_id;
+  }
+
+  public void setDepartment_id(int department_id) {
+    this.department_id = department_id;
+  }
 }
