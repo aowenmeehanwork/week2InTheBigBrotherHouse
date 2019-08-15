@@ -149,10 +149,20 @@ public class Employee {
 		this.salary = salary;
 	}
 
-
-
 	@Override
 	public String toString() {
-		return "Employee{" + "employee_id=" + employee_id + '}';
+    return "Employee{" +
+        "employee_id=" + employee_id +
+        ", first_name='" + first_name + '\'' +
+        ", middle_name='" + middle_name + '\'' +
+        ", last_name='" + last_name + '\'' +
+        ", address_line='" + address_line + '\'' +
+        ", post_code='" + post_code + '\'' +
+        ", email='" + email + '\'' +
+        ", nin='" + nin + '\'' +
+        ", bank_sort_code='" + bank_sort_code + '\'' +
+        ", bank_account_no='" + bank_account_no + '\'' +
+        ", salary=" + salary +
+        '}';
 	}
 }

@@ -25,20 +25,20 @@ DROP TABLE IF EXISTS `employee`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `employee` (
-  `employee_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `first_name` varchar(128) NOT NULL,
-  `middle_name` varchar(128) DEFAULT NULL,
-  `last_name` varchar(128) NOT NULL,
-  `address_line` varchar(256) NOT NULL,
-  `post_code` char(6) NOT NULL,
-  `email` varchar(128) NOT NULL,
-  `nin` char(8) DEFAULT NULL,
-  `bank_sort_code` char(6) DEFAULT NULL,
-  `bank_account_no` char(8) NOT NULL,
-  `salary` decimal(10,2) unsigned DEFAULT '0.00',
-  PRIMARY KEY (`employee_id`),
-  UNIQUE KEY `employee_id_UNIQUE` (`employee_id`),
-  UNIQUE KEY `email_UNIQUE` (`email`)
+                            `employee_id`     int(10) unsigned NOT NULL AUTO_INCREMENT,
+                            `first_name`      varchar(128)     NOT NULL,
+                            `middle_name`     varchar(128)           DEFAULT NULL,
+                            `last_name`       varchar(128)     NOT NULL,
+                            `address_line`    varchar(256)     NOT NULL,
+                            `post_code`       char(8)          NOT NULL,
+                            `email`           varchar(128)     NOT NULL,
+                            `nin`             char(9)                DEFAULT NULL,
+                            `bank_sort_code`  char(6)                DEFAULT NULL,
+                            `bank_account_no` char(8)          NOT NULL,
+                            `salary`          decimal(10,2) unsigned DEFAULT '0.00',
+                            PRIMARY KEY (`employee_id`),
+                            UNIQUE KEY `employee_id_UNIQUE` (`employee_id`),
+                            UNIQUE KEY `email_UNIQUE` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

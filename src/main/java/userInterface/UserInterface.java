@@ -14,7 +14,7 @@ public class UserInterface {
 
   public static void start() {
     Statement input = null;
-    while (input != Statement.EXIT) {
+    do {
       System.out.println("What operation would you like to perform:");
       for (Statement value : Statement.values()) {
         System.out.println("\t" + value.name());
@@ -24,10 +24,10 @@ public class UserInterface {
       try {
         input = Statement.valueOf(in.toUpperCase());
         switch (input) {
-          case INSERT:
+          case ADD:
             insert();
             break;
-          case SELECT:
+          case SHOW:
             select();
             break;
           case EXIT:
@@ -36,7 +36,7 @@ public class UserInterface {
       } catch (IllegalArgumentException e) {
         System.out.println("Invalid input: " + in);
       }
-    }
+    } while (input != Statement.EXIT);
   }
 
   private static void select() {
@@ -50,7 +50,7 @@ public class UserInterface {
   }
 
   private static void insert() {
-    System.out.println("Do you want to insert:");
+    System.out.println("What would you like to insert:");
     System.out.println("\tEmployee");
     String in = scanner.nextLine();
     if (in.toUpperCase().equals("EMPLOYEE")) {
@@ -77,41 +77,78 @@ public class UserInterface {
 	  do {
 	    employeeName = scanner.nextLine();
 	    if (!(employeeName.length() > 0 && employeeName.length() < 50)) {
-	      System.out.println("Ensure that name is not null and less than 50 characters long");
+        System.out.println("Ensure that first name is not null and less than 50 characters long");
 	    }
 	  } while (!(employeeName.length() > 0 && employeeName.length() < 50));
-	  
-	  System.out.println("Please enter employee surname: ");
-	  employeeSurname = scanner.nextLine();
-	  
-	  System.out.println("Please enter employee other names: ");
-	  employeeOtherNames = scanner.nextLine();
-	  
-	  System.out.println("Please enter employee address: ");
+
+    System.out.println("Please enter employee middle names: ");
+    employeeOtherNames = scanner.nextLine();
+
+    System.out.println("Please enter employee surname: ");
+    do {
+      employeeSurname = scanner.nextLine();
+      if (!(employeeSurname.length() > 0 && employeeSurname.length() < 50)) {
+        System.out.println("Ensure that surname is not null and less than 50 characters long");
+      }
+    } while (!(employeeSurname.length() > 0 && employeeSurname.length() < 50));
+
+    System.out.println("Please enter employee address: ");
 	  do {
 	    employeeAddress = scanner.nextLine();
-		if (!employeeAddress.isEmpty()) {
+      if (employeeAddress.isEmpty()) {
 			System.out.println("Please ensure that the address is not empty");
 		}
 	  } while ((employeeAddress.isEmpty()));
 
 	  System.out.println("Enter postcode");
-	  employeePostcode = scanner.nextLine();
-	  
+    do {
+      employeePostcode = scanner.nextLine();
+      if (!validPostcode(employeePostcode)) {
+        System.out.println("Please enter a valid postcode.");
+      }
+    } while (!validPostcode(employeePostcode));
+
 	  System.out.println("Please enter employee email: ");
-	  employeeEmail = scanner.nextLine();
+    do {
+      employeeEmail = scanner.nextLine();
+      if (!validEmail(employeeEmail)) {
+        System.out.println("Please enter valid email");
+      }
+    } while (!validEmail(employeeEmail));
 	  
 	  System.out.println("Please enter employee NI Number: ");
-	  employeeNINumber = scanner.nextLine();
-	  
+    do {
+      employeeNINumber = scanner.nextLine();
+      employeeNINumber = employeeNINumber.replaceAll(" ", "");
+      if (!validNINumber(employeeNINumber)) {
+        System.out.println("Please enter a valid NI number.");
+      }
+    } while (!validNINumber(employeeNINumber));
+
 	  System.out.println("Please enter employee bank account number: ");
-	  employeeBankAccountNo = scanner.nextLine();
-	  
+    do {
+      employeeBankAccountNo = scanner.nextLine();
+      employeeBankAccountNo = employeeBankAccountNo.replaceAll(" ", "");
+      if (!validBankAccountNubmer(employeeBankAccountNo)) {
+        System.out.println("Please enter a valid bank number");
+      }
+    } while (!validBankAccountNubmer(employeeBankAccountNo));
+
 	  System.out.println("Please enter employee bank account sort code (without '-' in number: ");
-	  employeeBankSortCode = scanner.nextLine();
-	  
+    do {
+      employeeBankSortCode = scanner.nextLine();
+      if (!validBankSortCode(employeeBankSortCode)) {
+        System.out.println("Please enter a valid bank sort code");
+      }
+    } while (!validBankSortCode(employeeBankSortCode));
+
 	  System.out.println("Please enter employee starting salary: ");
-	  employeeStartingSalary = scanner.nextInt();
+    do {
+      employeeStartingSalary = scanner.nextFloat();
+      if (!validSalary(employeeStartingSalary)) {
+        System.out.println("Please input a number greater than or equal to 0");
+      }
+    } while (!validSalary(employeeStartingSalary));
 	  
 	  Employee newEmployee = new Employee();
 
@@ -134,9 +171,35 @@ public class UserInterface {
 	  
   }
 
+  private static boolean validSalary(float employeeStartingSalary) {
+    return employeeStartingSalary >= 0;
+  }
+
+  private static boolean validBankSortCode(String employeeBankSortCode) {
+    return employeeBankSortCode.matches("^(\\d){6}$");
+  }
+
+  private static boolean validBankAccountNubmer(String employeeBankAccountNo) {
+    return employeeBankAccountNo.matches("[0-9]+") && employeeBankAccountNo.length() == 8;
+  }
+
+  private static boolean validNINumber(String employeeNINumber) {
+    return employeeNINumber.toUpperCase()
+        .matches("^[A-CEGHJ-PR-TW-Z]{1}[A-CEGHJ-NPR-TW-Z]{1}[0-9]{6}[A-DFM]{0,1}$");
+  }
+
+  private static boolean validEmail(String employeeEmail) {
+    return employeeEmail.toUpperCase().matches("[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,}");
+  }
+
+  private static boolean validPostcode(String employeePostcode) {
+    return employeePostcode.toUpperCase()
+        .matches("^[A-Z]{1,2}[0-9R][0-9A-Z]? [0-9][ABD-HJLNP-UW-Z]{2}$");
+  }
+
   private enum Statement {
-    INSERT,
-    SELECT,
+    ADD,
+    SHOW,
     EXIT
   }
 }
