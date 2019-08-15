@@ -18,7 +18,7 @@ public interface EmployeeDAO {
 	
 	@SqlUpdate("INSERT into "
 			+ "employee(first_name, middle_name, last_name, address_line, post_code, email, nin, bank_sort_code, bank_account_no, salary) "
-			+ "VALUES (:firstName, :middleName, :lastName, :addressLine, :postCode, :email, :nin, :bankSortCode, :bankAccountNo, :salary")
+			+ "VALUES (:first_name, :middle_name, :last_name, :address_line, :post_code, :email, :nin, :bank_sort_code, :bank_account_no, :salary")
 	@GetGeneratedKeys
 	int insertEmployee(@BindBean Employee employee);
 	// the above used to return long and it worked, so change to that if there are errors
