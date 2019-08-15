@@ -1,17 +1,16 @@
-package dao;
+package wrapper;
 
 import java.util.List;
 import model.Department;
 import model.Employee;
 import model.SalesEmployee;
-
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
 import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
-public interface EmployeeDAO {
+public interface EmployeeWrapper {
 
 	@SqlQuery("SELECT * FROM employee")
 	@RegisterBeanMapper(Employee.class)

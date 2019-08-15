@@ -1,6 +1,5 @@
 package userInterface;
 
-import dao.EmployeeDAO;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -8,8 +7,8 @@ import main.Connection;
 import model.Department;
 import model.Employee;
 import model.SalesEmployee;
-
 import org.jdbi.v3.core.Jdbi;
+import wrapper.EmployeeWrapper;
 
 public class UserInterface {
 
@@ -54,7 +53,7 @@ public class UserInterface {
 
 	private static void select() {
 		List<String> departments = connection.withHandle(handle -> {
-			EmployeeDAO wrapper = handle.attach(EmployeeDAO.class);
+      EmployeeWrapper wrapper = handle.attach(EmployeeWrapper.class);
 			List<Department> deps = wrapper.getAllDepartments();
 			return deps.stream().map(Department::getName).collect(Collectors.toList());
 		});
@@ -66,7 +65,7 @@ public class UserInterface {
 
 		if (departments.contains(input)) {
 			List<Employee> employees = connection.withHandle(handle -> {
-				EmployeeDAO wrapper = handle.attach(EmployeeDAO.class);
+        EmployeeWrapper wrapper = handle.attach(EmployeeWrapper.class);
 				return wrapper.getAllEmployeesFromDepartment(input);
 			});
 
@@ -103,7 +102,7 @@ public class UserInterface {
 
 		String finalDepartmentName = departmentName;
 		connection.withHandle(handle -> {
-			EmployeeDAO wrapper = handle.attach(EmployeeDAO.class);
+      EmployeeWrapper wrapper = handle.attach(EmployeeWrapper.class);
 			return wrapper.insertDepartment(finalDepartmentName);
 		});
 	}
@@ -202,7 +201,7 @@ public class UserInterface {
 		} while (!validSalary(employeeStartingSalary));
 
 		List<Department> departments = connection.withHandle(handle -> {
-			EmployeeDAO wrapper = handle.attach(EmployeeDAO.class);
+      EmployeeWrapper wrapper = handle.attach(EmployeeWrapper.class);
 			return wrapper.getAllDepartments();
 		});
 
@@ -240,7 +239,7 @@ public class UserInterface {
 		newEmployee.setDepartment_id(departmentId);
 				
 		int id = connection.withHandle(handle -> {
-			EmployeeDAO wrapper = handle.attach(EmployeeDAO.class);
+      EmployeeWrapper wrapper = handle.attach(EmployeeWrapper.class);
 			return wrapper.insertEmployee(newEmployee);
 		});
 		
@@ -269,7 +268,7 @@ public class UserInterface {
 			salesEmployee.setTotal_sales(totalSales);
 			
 			connection.useHandle(handle -> {
-				EmployeeDAO wrapper = handle.attach(EmployeeDAO.class);
+        EmployeeWrapper wrapper = handle.attach(EmployeeWrapper.class);
 				wrapper.insertSalesEmployee(salesEmployee);
 			});
 			
